@@ -1,0 +1,15 @@
+.profile {
+    padding-top: 36px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 50px;
+    color: #FFF;
+}
+
+@media screen and (max-width: 768px) {
+    .profile {
+        flex-direction: column;
+        gap: 36px;
+    }
+}

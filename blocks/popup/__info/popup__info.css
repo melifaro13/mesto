@@ -1,0 +1,28 @@
+.popup__info {
+    display: block;
+    margin: 0 auto 30px;
+    padding: 0 0 13px 0;
+    width: 358px;
+    background-color: #FFF;
+    border: none;
+    border-bottom: 1px solid;
+    outline: none;
+    border-color: rgba(0, 0, 0, .2);
+    font-size: 14px;
+    line-height: 17px;
+    color: #000;
+}
+
+.popup__info::placeholder {
+    color: #000;
+}
+
+.popup__info:last-of-type {
+    margin-bottom: 0;
+}
+
+@media screen and (max-width: 600px) {
+    .popup__info {
+        width: 238px;
+    }
+}
