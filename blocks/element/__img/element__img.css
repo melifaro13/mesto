@@ -1,4 +1,6 @@
 .element__img {
-    width: 100%;
+    width: 282px;
+    height: 282px;
     vertical-align: bottom;
+    object-fit: cover;
 }

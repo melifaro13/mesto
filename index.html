@@ -27,42 +27,42 @@
                 <img src="./images/Karachaevsk.jpg" alt="вид на разрушенное здание" class="element__img">
                 <div class="element__content">
                     <h2 class="element__title">Карачаево-Черкессия</h2>
-                    <button type="button" aria-label="Поставить лайк" class="element__like element__like_active"></button>
+                    <button type="button" aria-label="Поставить лайк" class="element__like"></button>
                 </div>
             </article>
             <article class="element">
                <img src="./images/Dombay.jpg" alt="вид на горы" class="element__img">
                 <div class="element__content">
                     <h2 class="element__title">Домбай</h2>
-                    <button type="button" aria-label="Поставить лайк" class="element__like element__like_active"></button>
+                    <button type="button" aria-label="Поставить лайк" class="element__like"></button>
                 </div>
             </article>
             <article class="element">
                 <img src="./images/Elbrus.jpg" alt="вид гору Эльбрус" class="element__img">
                 <div class="element__content">
                     <h2 class="element__title">Гора Эльбрус</h2>
-                    <button type="button" aria-label="Поставить лайк" class="element__like element__like_active"></button>
+                    <button type="button" aria-label="Поставить лайк" class="element__like"></button>
                 </div>
             </article>
             <article class="element">
                 <img src="./images/Karelia.jpg" alt="Карелия" class="element__img">
                 <div class="element__content">
                     <h2 class="element__title">Карелия</h2>
-                    <button type="button" aria-label="Поставить лайк" class="element__like element__like_active"></button>
+                    <button type="button" aria-label="Поставить лайк" class="element__like"></button>
                 </div>
             </article>
             <article class="element">
                 <img src="./images/Kosa.jpg" alt="Куршская коса" class="element__img">
                 <div class="element__content">
                     <h2 class="element__title">Куршская коса</h2>
-                    <button type="button" aria-label="Поставить лайк" class="element__like element__like_active"></button>
+                    <button type="button" aria-label="Поставить лайк" class="element__like"></button>
                 </div>
             </article>
             <article class="element">
                 <img src="./images/Kolsky.jpg" alt="Кольский" class="element__img">
                 <div class="element__content">
                     <h2 class="element__title">Кольский полуостров</h2>
-                    <button type="button" aria-label="Поставить лайк" class="element__like element__like_active"></button>
+                    <button type="button" aria-label="Поставить лайк" class="element__like"></button>
                 </div>
             </article>
         </section>
@@ -72,13 +72,13 @@
     </footer>
     <div class="popup">
         <div class="popup__container">
-            <p class="popup__text">Редактировать профиль</p>
-            <form class="popup__form">
-                <input type="text" class="popup__info popup__info_type_name" placeholder='Имя'>
-                <input type="text" class="popup__info popup__info_type_job" placeholder='О себе'>
+            <h3 class="popup__text">Редактировать профиль</h3>
+            <form name="editForm" class="popup__form">
+                <input type="text" class="popup__info popup__info_type_name" required placeholder='Имя'>
+                <input type="text" class="popup__info popup__info_type_job" required placeholder='О себе'>
                 <button type="submit" class="popup__save-button">Сохранить</button>
             </form>
-        <div class="popup__closed"></div>
+        <button type="button" aria-label="Закрыть" class="popup__closed"></button>
         </div>
     </div>
     <script src="./scripts/index.js"></script>
