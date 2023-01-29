@@ -1,0 +1,6 @@
+.popup__img {
+    max-width: 75vw;
+    max-height: 75vh;
+    vertical-align: bottom;
+    margin-bottom: 10px;
+}
