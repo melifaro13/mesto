@@ -32,10 +32,28 @@
     <div class="popup popup_type_edit-profile">
         <div class="popup__container">
             <h3 class="popup__text">Редактировать профиль</h3>
-            <form name="editForm" class="popup__form">
-                <input type="text" name="nameInput" class="popup__info popup__info_type_name" required placeholder='Имя'>
-                <input type="text" name="jobInput" class="popup__info popup__info_type_job" required placeholder='О себе'>
-                <button type="submit" class="popup__save-button">Сохранить</button>
+            <form name="editProfileForm" class="form" novalidate>
+                <input
+                    type="text"
+                    name="name"
+                    class="form__info form__info_type_name"
+                    id="name"
+                    required
+                    placeholder='Имя'
+                    minlength="2"
+                    maxlength="40">
+                <span class="name-info-error form__info-error"></span>
+                <input
+                    type="text"
+                    name="job"
+                    class="form__info form__info_type_job"
+                    id="job"
+                    required
+                    placeholder='О себе'
+                    minlength="2"
+                    maxlength="200">
+                <span class="job-info-error form__info-error"></span>
+                <button type="submit" class="form__save-button" disabled>Сохранить</button>
             </form>
         <button type="button" aria-label="Закрыть" class="popup__closed"></button>
         </div>
@@ -43,10 +61,26 @@
     <div class="popup popup_type_add-card">
         <div class="popup__container">
             <h3 class="popup__text">Новое место</h3>
-            <form name="editForm" class="popup__form">
-                <input type="text" name="placeInput" class="popup__info popup__info_type_place" required placeholder='Название'>
-                <input type="text" name="linkInput" class="popup__info popup__info_type_link" required placeholder='Ссылка на картинку'>
-                <button type="submit" class="popup__save-button">Создать</button>
+            <form name="addCardForm" class="form" novalidate>
+                <input
+                    type="text"
+                    name="place"
+                    class="form__info form__info_type_place"
+                    id="place"
+                    required
+                    placeholder='Название'
+                    minlength="2"
+                    maxlength="20">
+                <span class="place-info-error form__info-error"></span>
+                <input
+                    type="url"
+                    name="link"
+                    class="form__info form__info_type_link"
+                    id="link"
+                    required
+                    placeholder='Ссылка на картинку'>
+                <span class="link-info-error form__info-error"></span>
+                <button type="submit" class="form__save-button" disabled>Создать</button>
             </form>
         <button type="button" aria-label="Закрыть" class="popup__closed"></button>
         </div>
@@ -69,5 +103,6 @@
         </div>
     </template>
     <script src="./scripts/index.js"></script>
+    <script src="./scripts/validate.js"></script>
 </body>
 </html>

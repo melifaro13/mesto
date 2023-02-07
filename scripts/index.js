@@ -34,18 +34,26 @@ const profileCloseButton = popupEditProfile.querySelector('.popup__closed');
 const popupEditButton = document.querySelector('.profile__edit-button');
 const nameTitle = document.querySelector('.profile__name');
 const jobTitle = document.querySelector('.profile__information');
-const formProfile = popupEditProfile.querySelector('.popup__form')
-const nameInput = document.querySelector('.popup__info_type_name');
-const jobInput = document.querySelector('.popup__info_type_job');
+
+// Форма для редактирования данных профиля
+
+const formProfile = document.forms.editProfileForm;
+const nameInput = formProfile.elements.name;
+const jobInput = formProfile.elements.job;
+const buttonSaveEditProfile = formProfile.querySelector('.form__save-button');
 
 //Постоянные добавления карточек
 
 const popupAddCard = document.querySelector('.popup_type_add-card');
 const addCardCloseButton = popupAddCard.querySelector('.popup__closed');
 const popupAddCardButton = document.querySelector('.profile__add-button');
-const formElement = popupAddCard.querySelector('.popup__form');
-const placeInput = document.querySelector('.popup__info_type_place');
-const linkInput = document.querySelector('.popup__info_type_link');
+
+// Форма для добавления карточек
+
+const formElement = document.forms.addCardForm;
+const placeInput = formElement.elements.place;
+const linkInput = formElement.elements.link;
+const buttonSaveAddElement = formElement.querySelector('.form__save-button');
 
 //Постоянные просмотра карточек
 
@@ -60,22 +68,50 @@ const elementTemplate = document.querySelector('#element-template').content;
 
 const elementsList = document.querySelector('.elements');
 
+const popup = () => {
+    return document.querySelector('.popup_opened'); // если просто задать переменную, то не работает!
+}
+
 //эта функция открывает popup
 function openPopup(popup) {
     popup.classList.add('popup_opened');
+    document.addEventListener('keydown', closePopupEsc);
+    popup.addEventListener('mousedown', closePopupMouseClick);
 }
 
 //эта функция закрывает popup
 function closePopup(popup) {
     popup.classList.remove('popup_opened');
+    document.removeEventListener('keydown', closePopupEsc);
+    popup.removeEventListener('mousedown', closePopupMouseClick);
 }
 
+//эта функция для закрытия popUp с помощью клавиши 'Esc'
+function closePopupEsc(evt) {
+    if (evt.key === "Escape") {
+        closePopup(popup());
+    }
+}
+
+//эта функция для закрытия popUp с помощью клика мышкой вне модального окна
+function closePopupMouseClick(evt) {
+    if (evt.target == popup()) {
+        closePopup(popup());
+    }
+}
+
+//вешаем состояние кнопки
+function disabledSaveButton(button) {
+    button.setAttribute('disabled', true);
+    button.classList.add('form__save-button_disabled');
+}
 
 //эта функция выводит данные Name и Job при открытии popup
 function openProfilePopup() {
     nameInput.value = nameTitle.textContent;
     jobInput.value = jobTitle.textContent;
     openPopup(popupEditProfile);
+    disabledSaveButton(buttonSaveEditProfile);
 }
 
 //эта функция сохраняет данные Name и Job при редактировании
@@ -84,6 +120,17 @@ function handleFormProfileSubmit (evt) {
     nameTitle.textContent = nameInput.value;
     jobTitle.textContent = jobInput.value;
     closePopup(popupEditProfile);
+}
+
+//эта функция открывает модальное окно добавления картинки
+function openElementPopup() {
+    openPopup(popupAddCard);
+    disabledSaveButton(buttonSaveAddElement);
+}
+
+// эта функция ставит лайк
+function elementActiveLike (like) {
+    like.classList.toggle('element__like_active');
 }
 
 // эта функция открывает картинку
@@ -105,9 +152,7 @@ function createElement (link, name) {
     elementImg.alt = name;
     elementTitle.textContent = name;
     elementDeleteButton.addEventListener('click', () => elementContent.remove());
-    elementLike.addEventListener('click', () => {
-      elementLike.classList.toggle('element__like_active');
-    });
+    elementLike.addEventListener('click', () => elementActiveLike(elementLike));
     elementImg.addEventListener('click', () => openImage(link, name));
     return elementContent;
 }
@@ -141,7 +186,7 @@ formProfile.addEventListener('submit', handleFormProfileSubmit);
 //Добавление и удаление карточек
 
 //слушатель открывает модальное окно добавления карточек
-popupAddCardButton.addEventListener('click', () => openPopup(popupAddCard));
+popupAddCardButton.addEventListener('click', () => openElementPopup(popupAddCard));
 //слушатель закрывает модальное окно добавления карточек
 addCardCloseButton.addEventListener('click', () => closePopup(popupAddCard));
 //слушатель добавляет новый элемент
@@ -149,16 +194,4 @@ formElement.addEventListener('submit', handleFormElementSubmit);
 
 //слушатель закрывает модальное окно картинки
 showCardCloseButton.addEventListener('click', () => closePopup(popupShowCard));
-
-
-//Эксперименты
-
-//эта функция для закрытия popUp с помощью клавиши 'Esc'
-function closePopupEsc(e) {
-    if (e.key === "Escape") {
-        closePopup(popupEditProfile);
-    }
-}
-
-document.addEventListener('keydown', closePopupEsc); //этот слушатель закрывает popUp, при нажатии на кнопку 'Esc'
 
