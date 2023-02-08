@@ -10,7 +10,7 @@
     color: #FFF;
     margin: 48px auto 37px;
     padding: 14px 125px 18px;
-    border: none;
+    border: 1px solid #000;
     transition: opacity .2s linear;
 
 }

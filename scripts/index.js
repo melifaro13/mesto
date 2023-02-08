@@ -27,10 +27,11 @@ const initialCards = [
   }
 ];
 
+const popupAll = document.querySelectorAll('.popup');
+
 //Постоянные редактирования профиля
 
 const popupEditProfile = document.querySelector('.popup_type_edit-profile');
-const profileCloseButton = popupEditProfile.querySelector('.popup__closed');
 const popupEditButton = document.querySelector('.profile__edit-button');
 const nameTitle = document.querySelector('.profile__name');
 const jobTitle = document.querySelector('.profile__information');
@@ -45,7 +46,6 @@ const buttonSaveEditProfile = formProfile.querySelector('.form__save-button');
 //Постоянные добавления карточек
 
 const popupAddCard = document.querySelector('.popup_type_add-card');
-const addCardCloseButton = popupAddCard.querySelector('.popup__closed');
 const popupAddCardButton = document.querySelector('.profile__add-button');
 
 // Форма для добавления карточек
@@ -58,7 +58,6 @@ const buttonSaveAddElement = formElement.querySelector('.form__save-button');
 //Постоянные просмотра карточек
 
 const popupShowCard = document.querySelector('.popup_type_img');
-const showCardCloseButton = popupShowCard.querySelector('.popup__closed');
 const imgLink = document.querySelector('.popup__img');
 const imgCaption = document.querySelector('.popup__caption');
 
@@ -68,37 +67,42 @@ const elementTemplate = document.querySelector('#element-template').content;
 
 const elementsList = document.querySelector('.elements');
 
-const popup = () => {
-    return document.querySelector('.popup_opened'); // если просто задать переменную, то не работает!
+const activePopup = () => {
+    return document.querySelector('.popup_opened');
 }
 
 //эта функция открывает popup
 function openPopup(popup) {
     popup.classList.add('popup_opened');
     document.addEventListener('keydown', closePopupEsc);
-    popup.addEventListener('mousedown', closePopupMouseClick);
+    //popup.addEventListener('mousedown', closePopupMouseClick);
 }
 
 //эта функция закрывает popup
 function closePopup(popup) {
     popup.classList.remove('popup_opened');
     document.removeEventListener('keydown', closePopupEsc);
-    popup.removeEventListener('mousedown', closePopupMouseClick);
+    //popup.removeEventListener('mousedown', closePopupMouseClick);
 }
 
 //эта функция для закрытия popUp с помощью клавиши 'Esc'
 function closePopupEsc(evt) {
     if (evt.key === "Escape") {
-        closePopup(popup());
+        closePopup(activePopup());
     }
 }
 
-//эта функция для закрытия popUp с помощью клика мышкой вне модального окна
-function closePopupMouseClick(evt) {
-    if (evt.target == popup()) {
-        closePopup(popup());
-    }
-}
+//закрываем все модальные окна по клику мышки вне окна и на крестик всех модалок
+popupAll.forEach((popup) => {
+    popup.addEventListener('mousedown', (evt) => {
+        if (evt.target.classList.contains('popup_opened')) {
+            closePopup(popup)
+        }
+        if (evt.target.classList.contains('popup__closed')) {
+          closePopup(popup)
+        }
+    });
+});
 
 //вешаем состояние кнопки
 function disabledSaveButton(button) {
@@ -178,8 +182,6 @@ addElements();
 
 //слушатель открывает модальное окно редактирования профиля
 popupEditButton.addEventListener('click', () => openProfilePopup(popupEditProfile));
-//слушатель закрывает модальное окно редактирования профиля
-profileCloseButton.addEventListener('click', () => closePopup(popupEditProfile));
 //слушатель сохраняет вводимые данные в модальное окно
 formProfile.addEventListener('submit', handleFormProfileSubmit);
 
@@ -187,11 +189,6 @@ formProfile.addEventListener('submit', handleFormProfileSubmit);
 
 //слушатель открывает модальное окно добавления карточек
 popupAddCardButton.addEventListener('click', () => openElementPopup(popupAddCard));
-//слушатель закрывает модальное окно добавления карточек
-addCardCloseButton.addEventListener('click', () => closePopup(popupAddCard));
 //слушатель добавляет новый элемент
 formElement.addEventListener('submit', handleFormElementSubmit);
-
-//слушатель закрывает модальное окно картинки
-showCardCloseButton.addEventListener('click', () => closePopup(popupShowCard));
 
