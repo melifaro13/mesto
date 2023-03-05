@@ -14,9 +14,9 @@ const jobTitle = document.querySelector('.profile__information');
 
 // Форма для редактирования данных профиля
 
-const formProfile = document.forms.editProfileForm;
-const nameInput = formProfile.elements.name;
-const jobInput = formProfile.elements.job;
+const profileForm = document.forms.editProfileForm;
+const nameInput = profileForm.elements.name;
+const jobInput = profileForm.elements.job;
 
 //Постоянные добавления карточек
 
@@ -25,9 +25,9 @@ const popupAddCardButton = document.querySelector('.profile__add-button');
 
 // Форма для добавления карточек
 
-const formElement = document.forms.addCardForm;
-const placeInput = formElement.elements.place;
-const linkInput = formElement.elements.link;
+const cardForm = document.forms.addCardForm;
+const placeInput = cardForm.elements.place;
+const linkInput = cardForm.elements.link;
 
 //Постоянные просмотра карточек
 
@@ -37,9 +37,9 @@ const imgCaption = document.querySelector('.popup__caption');
 
 //Постоянные template
 
-const elementsList = document.querySelector('.elements');
+const cardsList = document.querySelector('.elements');
 
-const activePopup = () => {
+const findActivePopup = () => {
     return document.querySelector('.popup_opened');
 }
 
@@ -58,7 +58,7 @@ function closePopup(popup) {
 //эта функция для закрытия popUp с помощью клавиши 'Esc'
 function closePopupEsc(evt) {
     if (evt.key === "Escape") {
-        closePopup(activePopup());
+        closePopup(findActivePopup());
     }
 }
 
@@ -72,9 +72,10 @@ popupAll.forEach((popup) => {
 });
 
 //эта функция выводит данные Name и Job при открытии popup
-function openProfilePopup() {
+function openProfileForm() {
     nameInput.value = nameTitle.textContent;
     jobInput.value = jobTitle.textContent;
+    profileFormValidation.resetValidation();
     openPopup(popupEditProfile);
 }
 
@@ -87,7 +88,7 @@ function handleFormProfileSubmit (evt) {
 }
 
 //эта функция открывает модальное окно добавления картинки
-function openElementPopup() {
+function openAddElementForm() {
     openPopup(popupAddCard);
 }
 
@@ -109,40 +110,38 @@ function createElement(data, templateSelector, openImage) {
 //эта фуннкция добавляет новые элементы
 function handleFormElementSubmit(evt) {
     evt.preventDefault();
-    const elementValue = {name: placeInput.value, link: linkInput.value};
-    const cardElement = createElement(elementValue, '#element-template', openImage)
-    elementsList.prepend(cardElement);
+    const cardValue = {name: placeInput.value, link: linkInput.value};
+    const cardElement = createElement(cardValue, '#element-template', openImage)
+    cardsList.prepend(cardElement);
     closePopup(popupAddCard);
     evt.target.reset();
-    formElementValidation.resetValidation();
+    cardFormValidation.resetValidation();
 }
 
 //проходим по всему массиву с карточками.
 initialCards.forEach((item) => {
     const cardElement = createElement(item, '#element-template', openImage);
-    elementsList.append(cardElement);
+    cardsList.append(cardElement);
 });
 
-//Делаем новые формы валидации
-const formProfileValidation = new FormValidator(config, formProfile);
-const formElementValidation = new FormValidator(config, formElement);
+// //Делаем новые формы валидации
+const profileFormValidation = new FormValidator(config, profileForm);
+const cardFormValidation = new FormValidator(config, cardForm);
 
-formProfileValidation.enableValidation();
-formElementValidation.enableValidation();
+profileFormValidation.enableValidation();
+cardFormValidation.enableValidation();
 
 //слушатель открывает модальное окно редактирования профиля
 popupEditButton.addEventListener('click', () =>
-    openProfilePopup(popupEditProfile));
+    openProfileForm(popupEditProfile));
 
 //слушатель сохраняет вводимые данные в модальное окно
-formProfile.addEventListener('submit', handleFormProfileSubmit);
+profileForm.addEventListener('submit', handleFormProfileSubmit);
 
 // //слушатель открывает модальное окно добавления карточек
 popupAddCardButton.addEventListener('click', () => {
-    formElementValidation.resetValidation();
-    openElementPopup(popupAddCard)
+    openAddElementForm(popupAddCard)
 });
 
 //слушатель добавляет новый элемент
-formElement.addEventListener('submit', handleFormElementSubmit);
-
+cardForm.addEventListener('submit', handleFormElementSubmit);

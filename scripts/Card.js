@@ -14,11 +14,13 @@ export class Card {
 
     //вызываем метод, чтобы добавить слушатели
     _setEventListeners() {
-        this._element.querySelector('.element__like').addEventListener('click', () => {
-            this._buttonToggleLike();
+        this._likeButton = this._element.querySelector('.element__like');
+
+        this._likeButton.addEventListener('click', () => {
+            this._toggleLike();
         });
         this._element.querySelector('.element__delete').addEventListener('click', () => {
-            this._buttonDeleteElement();
+            this._deleteElement();
         });
         this._element.querySelector('.element__img').addEventListener('click', () => {
             this._openImage(this._link, this._name);
@@ -26,23 +28,24 @@ export class Card {
     }
 
     //метод - лайк
-    _buttonToggleLike() {
-        this._element.querySelector('.element__like').classList.toggle('element__like_active');
+    _toggleLike() {
+        this._likeButton.classList.toggle('element__like_active');
     }
 
     //метод - удалить карточку
-    _buttonDeleteElement() {
+    _deleteElement() {
         this._element.remove()
     }
 
     //добавляем данные в разметку
     generateCard() {
         this._element = this._getTemplate();
+        this._cardImage = this._element.querySelector('.element__img')
 
         this._setEventListeners();
     
-        this._element.querySelector('.element__img').src = this._link;
-        this._element.querySelector('.element__img').alt = this._name;
+        this._cardImage.src = this._link;
+        this._cardImage.alt = this._name;
         this._element.querySelector('.element__title').textContent = this._name;
 
         return this._element;
