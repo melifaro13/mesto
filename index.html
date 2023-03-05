@@ -42,7 +42,7 @@
                     placeholder='Имя'
                     minlength="2"
                     maxlength="40">
-                <span class="name-info-error form__info-error"></span>
+                <span class="name-error form__info-error"></span>
                 <input
                     type="text"
                     name="job"
@@ -52,7 +52,7 @@
                     placeholder='О себе'
                     minlength="2"
                     maxlength="200">
-                <span class="job-info-error form__info-error"></span>
+                <span class="job-error form__info-error"></span>
                 <button type="submit" class="form__save-button" disabled>Сохранить</button>
             </form>
         <button type="button" aria-label="Закрыть" class="popup__closed"></button>
@@ -71,7 +71,7 @@
                     placeholder='Название'
                     minlength="2"
                     maxlength="20">
-                <span class="place-info-error form__info-error"></span>
+                <span class="place-error form__info-error"></span>
                 <input
                     type="url"
                     name="link"
@@ -79,7 +79,7 @@
                     id="link"
                     required
                     placeholder='Ссылка на картинку'>
-                <span class="link-info-error form__info-error"></span>
+                <span class="link-error form__info-error"></span>
                 <button type="submit" class="form__save-button" disabled>Создать</button>
             </form>
         <button type="button" aria-label="Закрыть" class="popup__closed"></button>
@@ -102,7 +102,6 @@
             </div>
         </div>
     </template>
-    <script src="./scripts/index.js"></script>
-    <script src="./scripts/validate.js"></script>
+    <script type="module" src="./scripts/index.js"></script>
 </body>
 </html>

@@ -1,31 +1,7 @@
-//Карточки
 
-const initialCards = [
-  {
-    name: 'Архыз',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg'
-  },
-  {
-    name: 'Челябинская область',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg'
-  },
-  {
-    name: 'Иваново',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg'
-  },
-  {
-    name: 'Камчатка',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg'
-  },
-  {
-    name: 'Холмогорский район',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg'
-  },
-  {
-    name: 'Байкал',
-    link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
-  }
-];
+import {Card} from "./Card.js";
+import {FormValidator} from './FormValidator.js';
+import {initialCards, config} from './Const.js';
 
 const popupAll = document.querySelectorAll('.popup');
 
@@ -41,7 +17,6 @@ const jobTitle = document.querySelector('.profile__information');
 const formProfile = document.forms.editProfileForm;
 const nameInput = formProfile.elements.name;
 const jobInput = formProfile.elements.job;
-const buttonSaveEditProfile = formProfile.querySelector('.form__save-button');
 
 //Постоянные добавления карточек
 
@@ -53,7 +28,6 @@ const popupAddCardButton = document.querySelector('.profile__add-button');
 const formElement = document.forms.addCardForm;
 const placeInput = formElement.elements.place;
 const linkInput = formElement.elements.link;
-const buttonSaveAddElement = formElement.querySelector('.form__save-button');
 
 //Постоянные просмотра карточек
 
@@ -62,8 +36,6 @@ const imgLink = document.querySelector('.popup__img');
 const imgCaption = document.querySelector('.popup__caption');
 
 //Постоянные template
-
-const elementTemplate = document.querySelector('#element-template').content;
 
 const elementsList = document.querySelector('.elements');
 
@@ -75,14 +47,12 @@ const activePopup = () => {
 function openPopup(popup) {
     popup.classList.add('popup_opened');
     document.addEventListener('keydown', closePopupEsc);
-    //popup.addEventListener('mousedown', closePopupMouseClick);
 }
 
 //эта функция закрывает popup
 function closePopup(popup) {
     popup.classList.remove('popup_opened');
     document.removeEventListener('keydown', closePopupEsc);
-    //popup.removeEventListener('mousedown', closePopupMouseClick);
 }
 
 //эта функция для закрытия popUp с помощью клавиши 'Esc'
@@ -95,27 +65,17 @@ function closePopupEsc(evt) {
 //закрываем все модальные окна по клику мышки вне окна и на крестик всех модалок
 popupAll.forEach((popup) => {
     popup.addEventListener('mousedown', (evt) => {
-        if (evt.target.classList.contains('popup_opened')) {
+        if (evt.target.classList.contains('popup_opened') || evt.target.classList.contains('popup__closed')) {
             closePopup(popup)
-        }
-        if (evt.target.classList.contains('popup__closed')) {
-          closePopup(popup)
         }
     });
 });
-
-//вешаем состояние кнопки
-function disabledSaveButton(button) {
-    button.setAttribute('disabled', true);
-    button.classList.add('form__save-button_disabled');
-}
 
 //эта функция выводит данные Name и Job при открытии popup
 function openProfilePopup() {
     nameInput.value = nameTitle.textContent;
     jobInput.value = jobTitle.textContent;
     openPopup(popupEditProfile);
-    disabledSaveButton(buttonSaveEditProfile);
 }
 
 //эта функция сохраняет данные Name и Job при редактировании
@@ -129,12 +89,6 @@ function handleFormProfileSubmit (evt) {
 //эта функция открывает модальное окно добавления картинки
 function openElementPopup() {
     openPopup(popupAddCard);
-    disabledSaveButton(buttonSaveAddElement);
-}
-
-// эта функция ставит лайк
-function elementActiveLike (like) {
-    like.classList.toggle('element__like_active');
 }
 
 // эта функция открывает картинку
@@ -145,50 +99,50 @@ function openImage(link, name){
     openPopup(popupShowCard);
 }
 
-// эта функция создает элемент с картинкой
-function createElement (link, name) {
-    const elementContent = elementTemplate.querySelector('.element').cloneNode(true);
-    const elementImg = elementContent.querySelector('.element__img');
-    const elementDeleteButton = elementContent.querySelector('.element__delete');
-    const elementTitle = elementContent.querySelector('.element__title');
-    const elementLike = elementContent.querySelector('.element__like');
-    elementImg.src = link;
-    elementImg.alt = name;
-    elementTitle.textContent = name;
-    elementDeleteButton.addEventListener('click', () => elementContent.remove());
-    elementLike.addEventListener('click', () => elementActiveLike(elementLike));
-    elementImg.addEventListener('click', () => openImage(link, name));
-    return elementContent;
+//делаем новую карточку
+function createElement(data, templateSelector, openImage) {
+    const card = new Card(data, templateSelector, openImage);
+    const cardElement = card.generateCard();
+    return cardElement;
 }
 
 //эта фуннкция добавляет новые элементы
-function handleFormElementSubmit (evt) {
+function handleFormElementSubmit(evt) {
     evt.preventDefault();
-    const newElement = createElement(linkInput.value, placeInput.value)
-    elementsList.prepend(newElement);
+    const elementValue = {name: placeInput.value, link: linkInput.value};
+    const cardElement = createElement(elementValue, '#element-template', openImage)
+    elementsList.prepend(cardElement);
     closePopup(popupAddCard);
     evt.target.reset();
+    formElementValidation.resetValidation();
 }
 
-//достаем картинки из массива
-function addElements () {
-    const elements = initialCards.map(function (item) {
-        const element = createElement(item.link, item.name);
-        return element;
-    });
-    elementsList.append(...elements);
-}
-addElements();
+//проходим по всему массиву с карточками.
+initialCards.forEach((item) => {
+    const cardElement = createElement(item, '#element-template', openImage);
+    elementsList.append(cardElement);
+});
+
+//Делаем новые формы валидации
+const formProfileValidation = new FormValidator(config, formProfile);
+const formElementValidation = new FormValidator(config, formElement);
+
+formProfileValidation.enableValidation();
+formElementValidation.enableValidation();
 
 //слушатель открывает модальное окно редактирования профиля
-popupEditButton.addEventListener('click', () => openProfilePopup(popupEditProfile));
+popupEditButton.addEventListener('click', () =>
+    openProfilePopup(popupEditProfile));
+
 //слушатель сохраняет вводимые данные в модальное окно
 formProfile.addEventListener('submit', handleFormProfileSubmit);
 
-//Добавление и удаление карточек
+// //слушатель открывает модальное окно добавления карточек
+popupAddCardButton.addEventListener('click', () => {
+    formElementValidation.resetValidation();
+    openElementPopup(popupAddCard)
+});
 
-//слушатель открывает модальное окно добавления карточек
-popupAddCardButton.addEventListener('click', () => openElementPopup(popupAddCard));
 //слушатель добавляет новый элемент
 formElement.addEventListener('submit', handleFormElementSubmit);
 
