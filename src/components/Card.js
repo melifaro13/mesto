@@ -1,14 +1,15 @@
 export class Card {
-    constructor(data, templateSelector, openImage) {
+    constructor(data, templateSelector, openImage, handleCardClick) {
         this._name = data.name;
         this._link = data.link;
         this._templateSelector = templateSelector;
+        this._handleCardClick = handleCardClick;
         this._openImage = openImage;
     }
 
     //вызываем метод, чтобы получить наш темплейт
     _getTemplate() {
-        const elementContent = document.querySelector(this._templateSelector).content.querySelector('.element').cloneNode(true);
+        const elementContent = this._templateSelector.content.querySelector('.element').cloneNode(true);
         return elementContent;
     }
 
@@ -24,6 +25,9 @@ export class Card {
         });
         this._element.querySelector('.element__img').addEventListener('click', () => {
             this._openImage(this._link, this._name);
+        });
+        this._cardImage.addEventListener('click', () => {
+            this._handleCardClick(this._link, this._name); 
         });
     }
 

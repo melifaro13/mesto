@@ -27,6 +27,24 @@ export const initialCards = [
     }
   ];
 
+  //Константы
+
+  //Постоянные template
+  export const cardsList = document.querySelector('.elements');
+  export const template = document.querySelector('#element-template');
+
+  //Кнопки
+  export const popupEditButton = document.querySelector('.profile__edit-button');
+  export const popupAddCardButton = document.querySelector('.profile__add-button');
+
+  //Форма профиля
+  export const profileForm = document.forms.editProfileForm;
+  export const nameInput = profileForm.elements.name;
+  export const jobInput = profileForm.elements.job;
+
+  //Форма карточек
+  export const cardForm = document.forms.addCardForm;
+  
   //Объект
 
 export const config = {
