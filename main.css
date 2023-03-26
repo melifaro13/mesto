@@ -28,7 +28,7 @@
 .popup_opened{opacity:1;visibility:visible}
 .popup__container{background:#fff;border-radius:10px;box-shadow:0 0 25px rgba(0,0,0,.15);margin:auto;position:relative;width:430px}@media screen and (max-width:600px){.popup__container{width:282px}}
 .popup__text{color:#000;font-family:Inter,Arial,sans-serif;font-size:24px;font-weight:900;line-height:29px;margin:34px 36px 54px}@media screen and (max-width:600px){.popup__text{font-size:18px;line-height:22px;margin:25px 22px 75px}}
-.popup__text_type_delete-button{margin-bottom:38px}
+.popup__text-delete-button{color:#000;font-family:Inter,Arial,sans-serif;font-size:24px;font-weight:900;line-height:29px;margin:34px 36px 38px}
 .popup__closed{background-color:transparent;background-image:url(2ceb783afbab75916ddc.svg);background-position:50%;background-repeat:no-repeat;background-size:contain;border:none;cursor:pointer;height:32px;position:absolute;right:-40px;top:-40px;transition:opacity .2s linear;width:32px}.popup__closed:hover{opacity:.6}@media screen and (max-width:600px){.popup__closed{height:20px;right:0;top:-36px;width:20px}}
 .popup_type_img{background-color:rgba(0,0,0,.9)}
 .popup__container-img{margin:auto;position:relative}
