@@ -35,7 +35,7 @@
 .popup__caption{color:#fff;font-size:12px;line-height:15px}
 .form__info{background-color:#fff;border:rgba(0,0,0,.2);border-bottom:1px solid rgba(0,0,0,.2);box-sizing:border-box;color:#000;display:block;font-size:14px;line-height:17px;margin:0 auto;outline:none;padding-bottom:13px;width:358px}.form__info::-moz-placeholder{color:#c4c4c4}.form__info::placeholder{color:#c4c4c4}.form__info:last-of-type{margin-bottom:0}@media screen and (max-width:600px){.form__info{width:238px}}
 .form__info_type_error{border-bottom:1px solid red;transition:all,.2s,linear}
-.form__save-button{background-color:#000;border:1px solid #000;border-radius:2px;color:#fff;cursor:pointer;display:block;font-size:18px;line-height:22px;margin:48px auto 37px;padding:14px 125px 18px;text-align:center;transition:opacity .2s linear;width:358px}.form__save-button:hover{opacity:.8}@media screen and (max-width:600px){.form__save-button{font-size:14px;line-height:17px;margin:45px auto 25px;padding:14px 82px;width:238px}}
+.form__save-button{background-color:#000;border:1px solid #000;border-radius:2px;color:#fff;cursor:pointer;display:block;font-size:18px;line-height:22px;margin:0 auto 37px;padding:14px 125px 18px;text-align:center;transition:opacity .2s linear;width:358px}.form__save-button:hover{opacity:.8}@media screen and (max-width:600px){.form__save-button{font-size:14px;line-height:17px;margin:0 auto 25px;padding:14px 82px;width:238px}}
 .form__save-button_disabled{background-color:#fff;border:1px solid #c4c4c4;border-radius:2px;color:#c4c4c4;cursor:default}
 .form__info-error{color:red;display:block;font-size:12px;line-height:15px;margin-left:36px;margin-top:5px;min-height:30px}@media screen and (max-width:600px){.form__info-error{margin-left:22px}}
 
