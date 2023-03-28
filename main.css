@@ -42,5 +42,3 @@
 .form__save-button_disabled{background-color:#fff;border:1px solid #c4c4c4;border-radius:2px;color:#c4c4c4;cursor:default}
 .form__info-error{color:red;display:block;font-size:12px;line-height:15px;margin-left:36px;margin-top:5px;min-height:30px}@media screen and (max-width:600px){.form__info-error{margin-left:22px}}
 
-
-/*# sourceMappingURL=main.css.map*/
