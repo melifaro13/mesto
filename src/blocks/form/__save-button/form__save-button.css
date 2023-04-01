@@ -8,7 +8,7 @@
     line-height: 22px;
     text-align: center;
     color: #FFF;
-    margin: 48px auto 37px;
+    margin: 12px auto 37px;
     padding: 14px 125px 18px;
     border: 1px solid #000;
     transition: opacity .2s linear;
@@ -24,7 +24,7 @@
         width: 238px;
         font-size: 14px;
         line-height: 17px;
-        margin: 45px auto 25px;
+        margin: 11px auto 25px;
         padding: 14px 82px;
     }
 }
