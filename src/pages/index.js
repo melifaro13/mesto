@@ -8,19 +8,27 @@ import {PopupWithForm} from '../components/PopupWithForm.js';
 import {PopupWithConfirmation} from '../components/PopupWithConfirmation.js';
 import {UserInfo} from '../components/UserInfo.js';
 import {Api} from '../components/Api.js';
-import {config} from '../utils/Const.js';
-import {
-    cardsList,
-    template,
-    popupEditButton,
-    popupAddCardButton,
-    popupEditAvatarButton,
-    avatarForm,
-    profileForm,
-    nameInput,
-    jobInput,
-    cardForm
-} from '../utils/Const.js';
+import {config} from '../utils/const.js';
+
+//Постоянные template
+const cardsList = document.querySelector('.elements');
+const template = document.querySelector('#element-template');
+
+//Кнопки
+const popupEditButton = document.querySelector('.profile__edit-button');
+const popupAddCardButton = document.querySelector('.profile__add-button');
+const popupEditAvatarButton = document.querySelector('.profile__avatar-button');
+
+//Форма профиля
+const profileForm = document.forms.editProfileForm;
+const nameInput = profileForm.elements.name;
+const jobInput = profileForm.elements.job;
+
+//Форма карточек
+const cardForm = document.forms.addCardForm;
+
+//Форма добавления аватара
+const avatarForm = document.forms.editAvatarForm;
 
 const api = new Api({
     baseUrl: "https://mesto.nomoreparties.co/v1/cohort-63",
@@ -35,7 +43,7 @@ Promise.all([api.getUserInfo(), api.getInitialCards()])
     const { name, about, avatar, _id} = info;
     userInfo.setUserId(_id);
     userInfo.setUserInfo({ name, about });
-    userInfo.setUserAvatar(avatar);
+    userInfo.setUserAvatar({ avatar });
     initialCards.setItems(cards);
     initialCards.renderItems();
 })
@@ -135,12 +143,11 @@ const popupCardForm = new PopupWithForm('.popup_type_add-card',
 popupCardForm.setEventListeners();
 
 //форма добавления аватарки
-const popupAvatarForm = new PopupWithForm('.popup_type_edit-avatar', ({ avatar }) => {
-    const photo = document.querySelector('.profile__avatar');
+const popupAvatarForm = new PopupWithForm('.popup_type_edit-avatar', (data) => {
     popupCardForm.load(true);
-    api.editProfileAvatar({ avatar })
-    .then(() => {
-        photo.src = avatar;
+    api.editProfileAvatar(data)
+    .then((data) => {
+        userInfo.setUserAvatar({ avatar: data.avatar})
         popupAvatarForm.close();
     })
     .catch((err) => {
@@ -151,27 +158,31 @@ const popupAvatarForm = new PopupWithForm('.popup_type_edit-avatar', ({ avatar }
 
 popupAvatarForm.setEventListeners();
 
-//слушатель открывает попап изменения данных пользователя
-popupEditButton.addEventListener('click', () => {
+function handleEditProfileClick() {
     popupProfileForm.open();
+    profileFormValidation.resetValidation();
     profileFormValidation.disableSubmitButton();
     const {name, job} = userInfo.getUserInfo();
     nameInput.value = name;
-    jobInput.value = job;
-});
+    jobInput.value = job; 
+}
 
-//слушатель открывает попап добавления карточек
-popupAddCardButton.addEventListener('click', () => {
+popupEditButton.addEventListener('click', handleEditProfileClick);
+
+function handleAddCardClick() {
     popupCardForm.open();
     cardFormValidation.resetValidation();
-});
+}
 
-//слушатель открывает попап редактирования аватара
-popupEditAvatarButton.addEventListener('click', () => {
+popupAddCardButton.addEventListener('click', handleAddCardClick);
+
+function handleEditAvatarClick() {
     popupAvatarForm.open();
     avatarFormValidation.resetValidation();
     avatarFormValidation.disableSubmitButton();
-});
+}
+
+popupEditAvatarButton.addEventListener('click', handleEditAvatarClick);
 
 // //Делаем новые формы валидации
 const profileFormValidation = new FormValidator(config, profileForm);
